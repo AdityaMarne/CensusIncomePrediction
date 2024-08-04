@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      padding: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-right: 10px;
+      width: 100px;
+    }
+
+    input[type="text"], select {
+      width: 150px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    select {
+      width: 165px; /* Adjust width for select to accommodate arrow */
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .form-container {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+      width: 400px;
+      margin: auto;
+    }
+
+    .info-icon {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background-color: #2196F3;
+      color: white;
+      text-align: center;
+      border-radius: 50%;
+      font-size: 12px;
+      line-height: 16px;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+
+    .info-text {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 4px;
+      top: 0;
+      left: 320px;
+      width: 300px;
+      z-index: 1;
+      font-size: 12px;
+      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    }
+
+    .info-icon:hover + .info-text {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <form action="{{url_for('predict_datapoint')}}" method="POST">
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" placeholder="Enter age" required step="0.1" min="0">
+        <span class="info-icon">i</span>
+        <div class="info-text">The age of an individual, this ranges from 17 to 90.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="education_num">Education Number:</label>
+        <input type="number" id="education_num" name="education_num" placeholder="Enter education number" required step="0.1" min="0">
+        <span class="info-icon">i</span>
+        <div class="info-text">Number of years for which education was taken</div>
+      </div>
+
+      <div class="form-group">
+        <label for="capital_gain">Capital Gain:</label>
+        <input type="number" id="capital_gain" name="capital_gain" placeholder="Enter capital gain" required step="0.1" min="0">
+        <span class="info-icon">i</span>
+        <div class="info-text">Capital gained by a person</div>
+      </div>
+
+      <div class="form-group">
+        <label for="hours_per_week">Hours per Week:</label>
+        <input type="number" id="hours_per_week" name="hours_per_week" placeholder="Enter hours per week" required step="0.1" min="0">
+        <span class="info-icon">i</span>
+        <div class="info-text">Number of hours for which an individual works per week</div>
+      </div>
+
+      <div class="form-group">
+        <label for="workclass">Workclass:</label>
+        <select id="workclass" name="workclass" required>
+          <option value="Private">Private</option>
+          <option value="Self-emp-not-inc">Self-emp-not-inc</option>
+          <option value="Self-emp-inc">Self-emp-inc</option>
+          <option value="Federal-gov">Federal-gov</option>
+          <option value="Local-gov">Local-gov</option>
+          <option value="State-gov">State-gov</option>
+          <option value="Without-pay">Without-pay</option>
+          <option value="Never-worked">Never-worked</option>
+        </select>
+        <span class="info-icon">i</span>
+        <div class="info-text">The class of work to which an individual belongs.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="education">Education:</label>
+        <select id="education" name="education" required>
+          <option value="Bachelors">Bachelors</option>
+          <option value="Some-college">Some-college</option>
+          <option value="11th">11th</option>
+          <option value="HS-grad">HS-grad</option>
+          <option value="Prof-school">Prof-school</option>
+          <option value="Assoc-acdm">Assoc-acdm</option>
+          <option value="Assoc-voc">Assoc-voc</option>
+          <option value="9th">9th</option>
+          <option value="7th-8th">7th-8th</option>
+          <option value="12th">12th</option>
+          <option value="Masters">Masters</option>
+          <option value="1st-4th">1st-4th</option>
+          <option value="10th">10th</option>
+          <option value="Doctorate">Doctorate</option>
+          <option value="5th-6th">5th-6th</option>
+          <option value="Preschool">Preschool</option>
+        </select>
+        <span class="info-icon">i</span>
+        <div class="info-text">Highest level of education</div>
+      </div>
+
+      <div class="form-group">
+        <label for="marital_status">Marital Status:</label>
+        <select id="marital_status" name="marital_status" required>
+          <option value="Married-civ-spouse">Married-civ-spouse</option>
+          <option value="Divorced">Divorced</option>
+          <option value="Never-married">Never-married</option>
+          <option value="Separated">Separated</option>
+          <option value="Widowed">Widowed</option>
+          <option value="Married-spouse-absent">Married-spouse-absent</option>
+          <option value="Married-AF-spouse">Married-AF-spouse</option>
+        </select>
+        <span class="info-icon">i</span>
+        <div class="info-text">Represents the category assigned on the basis of marriage status of a person</div>
+      </div>
+
+      <div class="form-group">
+        <label for="occupation">Occupation:</label>
+        <select id="occupation" name="occupation" required>
+          <option value="Tech-support">Tech-support</option>
+          <option value="Craft-repair">Craft-repair</option>
+          <option value="Other-service">Other-service</option>
+          <option value="Sales">Sales</option>
+          <option value="Exec-managerial">Exec-managerial</option>
+          <option value="Prof-specialty">Prof-specialty</option>
+          <option value="Handlers-cleaners">Handlers-cleaners</option>
+          <option value="Machine-op-inspct">Machine-op-inspct</option>
+          <option value="Adm-clerical">Adm-clerical</option>
+          <option value="Farming-fishing">Farming-fishing</option>
+          <option value="Transport-moving">Transport-moving</option>
+          <option value="Priv-house-serv">Priv-house-serv</option>
+          <option value="Protective-serv">Protective-serv</option>
+          <option value="Armed-Forces">Armed-Forces</option>
+        </select>
+        <span class="info-icon">i</span>
+        <div class="info-text">Profession of a person</div>
+      </div>
+
+      <div class="form-group">
+        <label for="relationship">Relationship:</label>
+        <select id="relationship" name="relationship" required>
+          <option value="Wife">Wife</option>
+          <option value="Own-child">Own-child</option>
+          <option value="Husband">Husband</option>
+          <option value="Not-in-family">Not-in-family</option>
+          <option value="Other-relative">Other-relative</option>
+          <option value="Unmarried">Unmarried</option>
+        </select>
+        <span class="info-icon">i</span>
+        <div class="info-text">Relation of the person in his family</div>
+      </div>
+
+      <div class="form-group">
+        <label for="race">Race:</label>
+        <select id="race" name="race" required>
+          <option value="White">White</option>
+          <option value="Asian-Pac-Islander">Asian-Pac-Islander</option>
+          <option value="Amer-Indian-Eskimo">Amer-Indian-Eskimo</option>
+          <option value="Other">Other</option>
+          <option value="Black">Black</option>
+        </select>
+        <span class="info-icon">i</span>
+        <div class="info-text">Origin background of a person</div>
+      </div>
+
+      <div class="form-group">
+        <label for="sex">Sex:</label>
+        <select id="sex" name="sex" required>
+          <option value="Female">Female</option>
+          <option value="Male">Male</option>
+        </select>
+        <span class="info-icon">i</span>
+        <div class="info-text">Gender of a person</div>
+      </div>
+
+      <div class="form-group">
+        <label for="native_country">Native Country:</label>
+        <select id="native_country" name="native_country" required>
+          <option value="United-States">United-States</option>
+          <option value="Cambodia">Cambodia</option>
+          <option value="England">England</option>
+          <option value="Puerto-Rico">Puerto-Rico</option>
+          <option value="Canada">Canada</option>
+          <option value="Germany">Germany</option>
+          <option value="Outlying-US(Guam-USVI-etc)">Outlying-US(Guam-USVI-etc)</option>
+          <option value="India">India</option>
+          <option value="Japan">Japan</option>
+          <option value="Greece">Greece</option>
+          <option value="South">South</option>
+          <option value="China">China</option>
+          <option value="Cuba">Cuba</option>
+          <option value="Iran">Iran</option>
+          <option value="Honduras">Honduras</option>
+          <option value="Philippines">Philippines</option>
+          <option value="Italy">Italy</option>
+          <option value="Poland">Poland</option>
+          <option value="Jamaica">Jamaica</option>
+          <option value="Vietnam">Vietnam</option>
+          <option value="Mexico">Mexico</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Ireland">Ireland</option>
+          <option value="France">France</option>
+          <option value="Dominican-Republic">Dominican-Republic</option>
+          <option value="Laos">Laos</option>
+          <option value="Ecuador">Ecuador</option>
+          <option value="Taiwan">Taiwan</option>
+          <option value="Haiti">Haiti</option>
+          <option value="Columbia">Columbia</option>
+          <option value="Hungary">Hungary</option>
+          <option value="Guatemala">Guatemala</option>
+          <option value="Nicaragua">Nicaragua</option>
+          <option value="Scotland">Scotland</option>
+          <option value="Thailand">Thailand</option>
+          <option value="Yugoslavia">Yugoslavia</option>
+          <option value="El-Salvador">El-Salvador</option>
+          <option value="Trinadad&Tobago">Trinadad&Tobago</option>
+          <option value="Peru">Peru</option>
+          <option value="Hong">Hong</option>
+          <option value="Holand-Netherlands">Holand-Netherlands</option>
+        </select>
+        <span class="info-icon">i</span>
+        <div class="info-text">Country to which a person belongs</div>
+      </div>
+
+      <div style="clear:both;"></div>
+      <input type="submit" value="Predict Income">
+    </form>
+    <div><h1>{{final_result}}</h1></div>
+  </div>
+</body>
+</html>
