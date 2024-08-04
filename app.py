@@ -7,7 +7,7 @@ application=Flask(__name__)
 app=application
 
 
-@app.route('/predict',methods=['GET','POST'])
+@app.route('',methods=['GET','POST'])
 
 def predict_datapoint():
     if request.method=='GET':
